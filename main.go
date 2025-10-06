@@ -1,0 +1,13 @@
+package main
+
+import "fmt"
+
+func main() {
+	const USD_EUR = 0.8549
+	const USD_RUB = 81.9
+	//EUR_USD := 1 / USD_EUR
+	//RUB_USD := 1 / USD_RUB
+	//EUR_RUB := EUR_USD / RUB_USD
+	EUR_RUB := USD_RUB / USD_EUR
+	fmt.Println(EUR_RUB)
+}
