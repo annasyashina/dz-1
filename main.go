@@ -25,7 +25,7 @@ func getUserInput() (string, string, string) {
 	fmt.Println("Введите исходную валюту:")
 	fmt.Scan(&sourceCurrency)
 	fmt.Println("Введите, что хотим конвертировать:")
-	fmt.Println(&wantConvet)
+	fmt.Scan(&wantConvet)
 	fmt.Println("Введите конвертируемую валюту:")
 	fmt.Scan(&convertibleCurrency)
 	return sourceCurrency, wantConvet, convertibleCurrency
