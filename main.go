@@ -4,6 +4,8 @@ import (
 	"fmt"
 )
 
+type convertMap = map[string]float64
+
 const USD_EUR = 0.8599
 const USD_RUB = 78.84
 
@@ -77,33 +79,47 @@ func getUserInput() (string, float64, string) {
 
 func calculation(current string, number float64, convert string) float64 {
 	var result float64
+	m_evro := make(convertMap, 2)
+	m_evro["USD"] = 1 / USD_EUR
+	m_evro["RUB"] = USD_RUB / USD_EUR
 
-	switch current {
-	case "USD":
-		switch convert {
-		case "RUB":
-			result = number * USD_RUB
-		case "EUR":
-			result = number * USD_EUR
-		}
+	m_rub := make(convertMap, 2)
+	m_rub["USD"] = 1 / USD_RUB
+	m_rub["EUR"] = USD_EUR / USD_RUB
 
-	case "RUB":
-		switch convert {
+	m_usd := make(convertMap, 2)
+	m_usd["RUB"] = USD_RUB
+	m_usd["EUR"] = USD_EUR
+
+	m := map[string]convertMap{"USD": m_usd, "EUR": m_evro, "RUB": m_rub}
+	//fmt.Println(m)
+	result = number * m[current][convert]
+	/*	switch current {
 		case "USD":
-			result = number / USD_RUB
-		case "EUR":
-			result = number * USD_EUR / USD_RUB
-		}
+			switch convert {
+			case "RUB":
+				result = number * USD_RUB
+			case "EUR":
+				result = number * USD_EUR
+			}
 
-	case "EUR":
-		switch convert {
 		case "RUB":
-			result = number * USD_RUB / USD_EUR
-		case "USD":
-			result = number / USD_EUR
-		}
+			switch convert {
+			case "USD":
+				result = number / USD_RUB
+			case "EUR":
+				result = number * USD_EUR / USD_RUB
+			}
 
-	}
+		case "EUR":
+			switch convert {
+			case "RUB":
+				result = number * USD_RUB / USD_EUR
+			case "USD":
+				result = number / USD_EUR
+			}
+
+		}*/
 
 	return result
 }
