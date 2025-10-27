@@ -29,7 +29,7 @@ func main() {
 	m_usd["EUR"] = USD_EUR
 
 	m := map[string]convertMap{"USD": m_usd, "EUR": m_evro, "RUB": m_rub}
-	result := calculation(m, wantConvet, sourceCurrency, convertibleCurrency)
+	result := calculation(&m, wantConvet, sourceCurrency, convertibleCurrency)
 	//fmt.Println(m[sourceCurrency][convertibleCurrency])
 	//fmt.Println(reflect.TypeOf((m[sourceCurrency][convertibleCurrency])))
 	fmt.Println(result)
@@ -91,11 +91,11 @@ func getUserInput() (string, float64, string) {
 	return sourceCurrency, number, convertibleCurrency
 }
 
-func calculation(m map[string]convertMap, number float64, current string, convert string) float64 {
+func calculation(m *map[string]convertMap, number float64, current string, convert string) float64 {
 	var result float64
 
 	//fmt.Println(*m[current])
-	result = (number) * (m[current][convert])
+	result = (number) * ((*m)[current][convert])
 	/*	switch current {
 		case "USD":
 			switch convert {
