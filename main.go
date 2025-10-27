@@ -15,9 +15,23 @@ func main() {
 	var wantConvet float64
 	var convertibleCurrency string
 	sourceCurrency, wantConvet, convertibleCurrency = getUserInput()
-	fmt.Println(sourceCurrency, wantConvet, convertibleCurrency)
+	//fmt.Println(sourceCurrency, wantConvet, convertibleCurrency)
+	m_evro := make(convertMap, 2)
+	m_evro["USD"] = 1 / USD_EUR
+	m_evro["RUB"] = USD_RUB / USD_EUR
 
-	result := calculation(sourceCurrency, wantConvet, convertibleCurrency)
+	m_rub := make(convertMap, 2)
+	m_rub["USD"] = 1 / USD_RUB
+	m_rub["EUR"] = USD_EUR / USD_RUB
+
+	m_usd := make(convertMap, 2)
+	m_usd["RUB"] = USD_RUB
+	m_usd["EUR"] = USD_EUR
+
+	m := map[string]convertMap{"USD": m_usd, "EUR": m_evro, "RUB": m_rub}
+	result := calculation(m, wantConvet, sourceCurrency, convertibleCurrency)
+	//fmt.Println(m[sourceCurrency][convertibleCurrency])
+	//fmt.Println(reflect.TypeOf((m[sourceCurrency][convertibleCurrency])))
 	fmt.Println(result)
 	//EUR_USD := 1 / USD_EUR
 	//RUB_USD := 1 / USD_RUB
@@ -77,23 +91,11 @@ func getUserInput() (string, float64, string) {
 	return sourceCurrency, number, convertibleCurrency
 }
 
-func calculation(current string, number float64, convert string) float64 {
+func calculation(m map[string]convertMap, number float64, current string, convert string) float64 {
 	var result float64
-	m_evro := make(convertMap, 2)
-	m_evro["USD"] = 1 / USD_EUR
-	m_evro["RUB"] = USD_RUB / USD_EUR
 
-	m_rub := make(convertMap, 2)
-	m_rub["USD"] = 1 / USD_RUB
-	m_rub["EUR"] = USD_EUR / USD_RUB
-
-	m_usd := make(convertMap, 2)
-	m_usd["RUB"] = USD_RUB
-	m_usd["EUR"] = USD_EUR
-
-	m := map[string]convertMap{"USD": m_usd, "EUR": m_evro, "RUB": m_rub}
-	//fmt.Println(m)
-	result = number * m[current][convert]
+	//fmt.Println(*m[current])
+	result = (number) * (m[current][convert])
 	/*	switch current {
 		case "USD":
 			switch convert {
